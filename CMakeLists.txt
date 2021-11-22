@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(FlappyBird)
 
 set(CMAKE_CXX_STANDARD 17)
-set(SOURCE_FILES Sources/main.cpp Headers/State.h Sources/StateMachine.cpp Headers/StateMachine.h Sources/AssetManager.cpp Headers/AssetManager.h)
+set(SOURCE_FILES Sources/main.cpp Headers/State.h Sources/StateMachine.cpp Headers/StateMachine.h Sources/AssetManager.cpp Headers/AssetManager.h Sources/InputManager.cpp Headers/InputManager.h)
 add_executable(HelloSFML ${SOURCE_FILES})
 include_directories(/usr/local/include)
 
