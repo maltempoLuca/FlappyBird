@@ -11,9 +11,9 @@ namespace Maltempo {
 
     class StateMachine {
     public:
-        StateMachine();
+        StateMachine() {};
 
-        ~StateMachine();
+        ~StateMachine() {};
 
         void addState(StateRef newState, bool isReplacing = true);
 
@@ -21,14 +21,14 @@ namespace Maltempo {
 
         void processStateChanges();
 
-        StateRef  &getActiveState();
+        StateRef &getActiveState();
 
     private:
         std::stack<StateRef> states;
-        StateRef  newState;
+        StateRef newState;
 
-        bool removing;
-        bool adding;
-        bool replacing;
+        bool isRemoving;
+        bool isAdding;
+        bool isReplacing;
     };
 }

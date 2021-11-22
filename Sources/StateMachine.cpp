@@ -5,47 +5,37 @@
 #include "../Headers/StateMachine.h"
 namespace Maltempo {
 
-    StateMachine::StateMachine() {
-
-    }
-
-    StateMachine::~StateMachine() {
-
-    }
-
-    void StateMachine::addState(Maltempo::StateRef newState, bool isReplacing) {
-        this->adding = true;
-        this->replacing = isReplacing;
+    void StateMachine::addState(StateRef newState, bool isReplacing) {
+        this->isAdding = true;
+        this->isReplacing = isReplacing;
 
         this->newState = std::move(newState);
     }
 
     void StateMachine::removeState() {
-        this->removing = true;
+        this->isRemoving = true;
     }
 
     void StateMachine::processStateChanges() {
-        if (this->removing && !this->states.empty()) {
+        if (this->isRemoving && !this->states.empty()) {
             this->states.pop();
-
             if (!this->states.empty()) {
                 this->states.top()->resume();
             }
-            this->removing = false;
+            this->isRemoving = false;
         }
 
-        if (this->adding) {
+        if (this->isAdding) {
             if (!this->states.empty()) {
-                if (this->replacing) {
+                if (this->isReplacing) {
                     this->states.pop();
                 } else {
-                    this->states.top()->pause();
+                    this->states.top()->pause(); // perche non lo abbiamo rimosso, quindi lo stoppiamo.
                 }
             }
             this->states.push(std::move(newState));
             this->states.top()->init();
-            this->adding = false;
-
+            this->isAdding = false;
         }
     }
 
