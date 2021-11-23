@@ -4,8 +4,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "State.h"
-#include "Game.h"
+#include "../Headers/State.h"
+#include "../Headers/Game.h"
 
 namespace Maltempo {
     class SplashState : public State {
@@ -23,7 +23,6 @@ namespace Maltempo {
     private:
         GameDataRef data;
         sf::Clock clock;
-        sf::Texture backgroundTexture;
         sf::Sprite background;
     };
 

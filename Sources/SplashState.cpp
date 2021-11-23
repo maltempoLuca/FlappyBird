@@ -6,6 +6,7 @@
 #include<sstream>
 #include "../Headers/SplashState.h"
 #include "../Headers/DEFINITIONS.h"
+#include "../Headers/MainMenuState.h"
 #include <iostream>
 
 namespace Maltempo {
@@ -30,7 +31,7 @@ namespace Maltempo {
 
     void SplashState::update(float dt) {
         if (clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME) {
-            std::cout << "GO TO MAIN MENU" << std::endl;
+            data->machine.addState(StateRef(new MainMenuState(data)), true);
         }
     }
 
@@ -40,6 +41,3 @@ namespace Maltempo {
         data->window.display();
     }
 }
-
-
-
