@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include <iostream>
 #include <map>
 #include <SFML/Graphics.hpp>
 

@@ -9,7 +9,7 @@ namespace Maltempo {
 
     void AssetManager::loadTexture(std::string name, std::string fileName) {
         sf::Texture tex;
-        if (tex.loadFromFile(fileName)) {
+        if (tex.loadFromFile(fileName)) {    //TODO:: ERRORE QUI!
             this->textures[name] = tex;
         }
     }

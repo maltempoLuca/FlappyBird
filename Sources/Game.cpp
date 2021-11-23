@@ -3,10 +3,12 @@
 //
 
 #include "../Headers/Game.h"
+#include "../Headers/SplashState.h"
 
 namespace Maltempo {
     Game::Game(int width, int height, std::string title) {
         data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
+        data->machine.addState(StateRef(new SplashState(this->data)));
 
         this->run();
     }
