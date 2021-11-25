@@ -3,6 +3,7 @@
 //
 
 #include "../Headers/MainMenuState.h"
+#include "../Headers/GameState.h"
 #include<sstream>
 #include "../Headers/DEFINITIONS.h"
 #include <iostream>
@@ -33,15 +34,12 @@ namespace Maltempo {
             }
 
             if(data->input.isSpriteClicked(playButton,sf::Mouse::Left, data->window)){
-                std::cout<<"Go to Screen"<<std::endl;
+                data->machine.addState(StateRef(new GameState(data)), true);
             }
         }
     }
 
     void MainMenuState::update(float dt) {
-//        if (clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME) {
-//            std::cout << "GO TO MAIN MENU" << std::endl;
-//        }
     }
 
     void MainMenuState::draw(float dt) {
