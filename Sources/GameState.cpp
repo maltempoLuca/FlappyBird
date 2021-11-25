@@ -6,6 +6,7 @@
 
 #include<sstream>
 #include "../Headers/GameState.h"
+#include "../Headers/GameOverState.h"
 #include "../Headers/DEFINITIONS.h"
 #include <iostream>
 
@@ -25,7 +26,8 @@ namespace Maltempo {
         sf::Event event;
         while (data->window.pollEvent(event)) {
             if (sf::Event::Closed == event.type) {
-                data->window.close();
+                data->machine.addState(StateRef(new GameOverState(data)));
+                //data->window.close();
             }
         }
     }
