@@ -7,23 +7,29 @@
 #include <SFML/Graphics.hpp>
 #include "../Headers/State.h"
 #include "../Headers/Game.h"
+#include "../Headers/Pipe.h"
+#include "../Headers/Land.h"
+
 
 namespace Maltempo {
     class GameState : public State {
     public:
         explicit GameState(GameDataRef data);
 
-        void init();
+        void init() override;
 
-        void handleInput();
+        void handleInput() override;
 
-        void update(float dt);
+        void update(float dt) override;
 
-        void draw(float dt);
+        void draw(float dt) override;
 
     private:
         GameDataRef data;
         sf::Sprite background;
+        Pipe *pipe;
+        Land *land;
+
     };
 
 }

@@ -17,7 +17,7 @@ namespace Maltempo {
 
     void GameOverState::init() {
         std::cout<<"Game Over State"<<std::endl;
-        data->assets.loadTexture("Game Over Background", GAME_BACKGROUND_FILEPATH);
+        data->assets.loadTexture("Game Over Background", GAME_OVER_BACKGROUND_FILEPATH);
         background.setTexture(this->data->assets.getTexture("Game Over Background"));
     }
 

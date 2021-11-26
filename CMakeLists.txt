@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(SOURCE_FILES Sources/main.cpp Headers/State.h Sources/StateMachine.cpp Headers/StateMachine.h
         Sources/AssetManager.cpp Headers/AssetManager.h Sources/InputManager.cpp Headers/InputManager.h
         Sources/Game.cpp Headers/Game.h Resources Headers/DEFINITIONS.h Sources/SplashState.cpp
-        Headers/SplashState.h Sources/MainMenuState.cpp Headers/MainMenuState.h Sources/GameState.cpp Headers/GameState.h Sources/GameOverState.cpp Headers/GameOverState.h)
+        Headers/SplashState.h Sources/MainMenuState.cpp Headers/MainMenuState.h Sources/GameState.cpp Headers/GameState.h Sources/GameOverState.cpp Headers/GameOverState.h Sources/Pipe.cpp Headers/Pipe.h Sources/Land.cpp Headers/Land.h)
 add_executable(HelloSFML ${SOURCE_FILES})
 include_directories(/usr/local/include)
 

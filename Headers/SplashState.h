@@ -10,15 +10,15 @@
 namespace Maltempo {
     class SplashState : public State {
     public:
-        SplashState(GameDataRef data);
+        explicit SplashState(GameDataRef data);
 
-        void init();
+        void init() override;
 
-        void handleInput();
+        void handleInput() override;
 
-        void update(float dt);
+        void update(float dt) override;
 
-        void draw(float dt);
+        void draw(float dt) override;
 
     private:
         GameDataRef data;
