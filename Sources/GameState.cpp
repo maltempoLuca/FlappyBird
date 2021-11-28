@@ -22,9 +22,11 @@ namespace Maltempo {
         data->assets.loadTexture("Pipe Up", PIPE_UP_FILEPATH);
         data->assets.loadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
         data->assets.loadTexture("Land", LAND_FILEPATH);
+        data->assets.loadTexture("Bird Frame 1", BIRD_FRAME_1_FILEPATH);
 
         pipe = new Pipe(data);
         land = new Land(data);
+        bird = new Bird(data);
 
         background.setTexture(this->data->assets.getTexture("Game Background"));
     }
@@ -35,16 +37,17 @@ namespace Maltempo {
             if (sf::Event::Closed == event.type) {
                 data->window.close();
             }
-
-            if (data->input.isSpriteClicked(background, sf::Mouse::Left, data->window)) {
-                pipe->spawnBottomPipe();
-                pipe->spawnTopPipe();
-            }
         }
     }
 
     void GameState::update(float dt) {
         pipe->movePipes(dt);
+        if (clock.getElapsedTime().asSeconds() > PIPE_SPAWN_FREQUENCY) {
+            pipe->randomisePipeOffset();
+            pipe->spawnBottomPipe();
+            pipe->spawnTopPipe();
+            clock.restart();
+        }
         land->moveLand(dt);
     }
 
@@ -53,6 +56,7 @@ namespace Maltempo {
         data->window.draw(background);
         pipe->drawPipes();
         land->drawLand();
+        bird->draw();
         data->window.display();
     }
 }

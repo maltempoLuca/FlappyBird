@@ -9,6 +9,7 @@
 #include "../Headers/Game.h"
 #include "../Headers/Pipe.h"
 #include "../Headers/Land.h"
+#include "../Headers/Bird.h"
 
 
 namespace Maltempo {
@@ -25,11 +26,12 @@ namespace Maltempo {
         void draw(float dt) override;
 
     private:
+        sf::Clock clock;
         GameDataRef data;
         sf::Sprite background;
         Pipe *pipe;
         Land *land;
-
+        Bird *bird;
     };
 
 }

@@ -4,6 +4,7 @@
 
 #pragma  once
 
+#include <SFML/Graphics.hpp>
 #include "Game.h"
 #include <vector>
 
@@ -11,7 +12,7 @@ namespace Maltempo {
 
     class Land {
     public:
-        explicit Land(GameDataRef data);
+        explicit Land(const GameDataRef& data);
 
         void moveLand(float dt);
 

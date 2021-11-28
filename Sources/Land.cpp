@@ -7,7 +7,7 @@
 
 namespace Maltempo {
 
-    Land::Land(GameDataRef data) : data(data) {
+    Land::Land(const GameDataRef& data) : data(data) {
         sf::Sprite sprite(data->assets.getTexture("Land"));
         sf::Sprite sprite2(data->assets.getTexture("Land"));
         sprite.setPosition(sprite.getGlobalBounds().width, data->window.getSize().y - sprite.getGlobalBounds().height);
