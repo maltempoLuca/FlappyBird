@@ -33,4 +33,8 @@ namespace Maltempo {
             data->window.draw(landSprites.at(i));
         }
     }
+
+    const std::vector<sf::Sprite> &Land::getLandSprites() const {
+        return landSprites;
+    }
 }

@@ -25,6 +25,10 @@ namespace Maltempo {
 
         void randomisePipeOffset();
 
+        const std::vector<sf::Sprite> &getPipeSprites() const;
+
+        void setPipeSprites(const std::vector<sf::Sprite> &pipeSprites);
+
     private:
         GameDataRef data;
         std::vector<sf::Sprite> pipeSprites;

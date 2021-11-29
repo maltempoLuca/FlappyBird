@@ -32,6 +32,8 @@ namespace Maltempo {
         bird = new Bird(data);
 
         background.setTexture(this->data->assets.getTexture("Game Background"));
+
+        gameState = GameStates::eReady;
     }
 
     void GameState::handleInput() {
@@ -42,22 +44,44 @@ namespace Maltempo {
             }
 
             if (data->input.isSpriteClicked(background, sf::Mouse::Left, this->data->window)) {
-                bird->tap();
+                if (gameState != eGameOver) {
+                    gameState = ePlaying;
+                    bird->tap();
+                }
             }
         }
     }
 
     void GameState::update(float dt) {
-        pipe->movePipes(dt);
-        if (clock.getElapsedTime().asSeconds() > PIPE_SPAWN_FREQUENCY) {
-            pipe->randomisePipeOffset();
-            pipe->spawnBottomPipe();
-            pipe->spawnTopPipe();
-            clock.restart();
+        if (gameState != eGameOver) {
+            bird->animate(dt);
+            land->moveLand(dt);
         }
-        land->moveLand(dt);
-        bird->animate(dt);
-        bird->update(dt);
+        if (gameState == ePlaying) {
+            pipe->movePipes(dt);
+            if (clock.getElapsedTime().asSeconds() > PIPE_SPAWN_FREQUENCY) {
+                pipe->randomisePipeOffset();
+                pipe->spawnBottomPipe();
+                pipe->spawnTopPipe();
+                clock.restart();
+            }
+            bird->update(dt);
+            std::vector<sf::Sprite> landSprites = land->getLandSprites();
+            for (auto &landSprite: landSprites) {
+                if (Collision::checkSpriteCollision(bird->getSprite(), BIRD_COLLISION_SCALE, landSprite,
+                                                    FULL_COLLISION_SCALE)) {
+                    gameState = eGameOver;
+                }
+            }
+
+            std::vector<sf::Sprite> pipeSprites = pipe->getPipeSprites();
+            for (auto &pipeSprite: pipeSprites) {
+                if (Collision::checkSpriteCollision(bird->getSprite(), 1.0f, pipeSprite,
+                                                    FULL_COLLISION_SCALE)) {
+                    gameState = eGameOver;
+                }
+            }
+        }
     }
 
     void GameState::draw(float dt) {

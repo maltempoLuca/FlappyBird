@@ -23,6 +23,8 @@ namespace Maltempo {
 
         void tap();
 
+        const sf::Sprite &getSprite() const;
+
     private:
         GameDataRef data;
         sf::Sprite birdSprite;

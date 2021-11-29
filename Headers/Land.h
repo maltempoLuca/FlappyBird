@@ -12,11 +12,13 @@ namespace Maltempo {
 
     class Land {
     public:
-        explicit Land(const GameDataRef& data);
+        explicit Land(const GameDataRef &data);
 
         void moveLand(float dt);
 
         void drawLand();
+
+        const std::vector<sf::Sprite> &getLandSprites() const;
 
     private:
         GameDataRef data;

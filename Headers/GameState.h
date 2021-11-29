@@ -10,6 +10,7 @@
 #include "../Headers/Pipe.h"
 #include "../Headers/Land.h"
 #include "../Headers/Bird.h"
+#include "../Headers/Collision.h"
 
 
 namespace Maltempo {
@@ -32,6 +33,8 @@ namespace Maltempo {
         Pipe *pipe;
         Land *land;
         Bird *bird;
+
+        int gameState;
     };
 
 }

@@ -46,4 +46,12 @@ namespace Maltempo {
     void Pipe::randomisePipeOffset() {
         pipeSpawnYOffset = (floatDistro(defEngine) * (float)(landHeight + 1.0));
     }
+
+    const std::vector<sf::Sprite> &Pipe::getPipeSprites() const {
+        return pipeSprites;
+    }
+
+    void Pipe::setPipeSprites(const std::vector<sf::Sprite> &pipeSprites) {
+        Pipe::pipeSprites = pipeSprites;
+    }
 }

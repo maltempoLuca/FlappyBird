@@ -71,4 +71,8 @@ namespace Maltempo {
         birdState = BIRD_STATE_FLYING;
     }
 
+    const sf::Sprite &Bird::getSprite() const {
+        return birdSprite;
+    }
+
 }

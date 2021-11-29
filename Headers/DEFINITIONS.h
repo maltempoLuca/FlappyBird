@@ -30,3 +30,13 @@
 #define FLYING_SPEED 350.0f
 #define FLYING_DURATION 0.35f
 #define ROTATION_SPEED 130.0f
+#define BIRD_COLLISION_SCALE 0.625f
+#define FULL_COLLISION_SCALE 1.0f
+
+
+enum GameStates
+{
+    eReady,
+    ePlaying,
+    eGameOver
+};
