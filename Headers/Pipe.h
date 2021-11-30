@@ -12,12 +12,15 @@
 namespace Maltempo {
 
     class Pipe {
+
     public:
-        explicit Pipe(GameDataRef data);
+        explicit Pipe(const GameDataRef& data);
 
         void spawnBottomPipe();
 
         void spawnTopPipe();
+
+        void spawnScoringPipe();
 
         void movePipes(float dt);
 
@@ -25,13 +28,17 @@ namespace Maltempo {
 
         void randomisePipeOffset();
 
-        const std::vector<sf::Sprite> &getPipeSprites() const;
+        [[nodiscard]] const std::vector<sf::Sprite> &getPipeSprites() const;
+        [[nodiscard]] const std::vector<sf::Sprite> &getScoringPipesSprites() const;
 
-        void setPipeSprites(const std::vector<sf::Sprite> &pipeSprites);
+        [[maybe_unused]] std::vector<bool>  &getIsBeenHitScore();
 
     private:
         GameDataRef data;
         std::vector<sf::Sprite> pipeSprites;
+        std::vector<sf::Sprite> scoringSprites;
+        std::vector<bool> hitScore;
+
 
         float landHeight;
         float pipeSpawnYOffset;

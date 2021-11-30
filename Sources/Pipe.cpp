@@ -4,13 +4,12 @@
 
 #include "../Headers/Pipe.h"
 #include "../Headers/DEFINITIONS.h"
-#include "iostream"
 
 
+//TODO:: gestisci attraverso una struct i pipes + boolean.
 namespace Maltempo {
-    //TODO:: elimina le pipe che escono dallo schermo.
 
-    Pipe::Pipe(GameDataRef data) : data(data), landHeight(data->assets.getTexture("Land").getSize().y),
+    Pipe::Pipe(const GameDataRef& data) : data(data), landHeight(data->assets.getTexture("Land").getSize().y),
                                    pipeSpawnYOffset(0) {
     }
 
@@ -22,7 +21,8 @@ namespace Maltempo {
 
     void Pipe::spawnBottomPipe() {
         sf::Sprite sprite(data->assets.getTexture("Pipe Up"));
-        sprite.setPosition(data->window.getSize().x, data->window.getSize().y - sprite.getGlobalBounds().height - pipeSpawnYOffset);
+        sprite.setPosition(data->window.getSize().x,
+                           data->window.getSize().y - sprite.getGlobalBounds().height - pipeSpawnYOffset );
         pipeSprites.push_back(sprite);
     }
 
@@ -32,26 +32,48 @@ namespace Maltempo {
         pipeSprites.push_back(sprite);
     }
 
+    void Pipe::spawnScoringPipe() {
+        sf::Sprite sprite(data->assets.getTexture("Scoring Pipe"));
+        sprite.setPosition(data->window.getSize().x + (sprite.getGlobalBounds().width / 2), 0);
+        sprite.setColor(sf::Color(0, 0, 0, 0));
+
+        scoringSprites.push_back(sprite);
+        hitScore.push_back(false);
+    }
+
     void Pipe::movePipes(float dt) {
         for (int i = 0; i < pipeSprites.size(); i++) {
             float movement = PIPE_MOVEMENT_SPEED * dt;
             pipeSprites.at(i).move(-movement, 0);
-            data->window.draw(pipeSprites.at(i));
             if (pipeSprites.at(i).getPosition().x < 0 - pipeSprites.at(i).getGlobalBounds().width) {
                 pipeSprites.erase(pipeSprites.begin() + i);
+            }
+        }
+
+        for (int i = 0; i < scoringSprites.size(); i++) {
+            float movement = PIPE_MOVEMENT_SPEED * dt;
+            scoringSprites.at(i).move(-movement, 0);
+            if (scoringSprites.at(i).getPosition().x <
+                0 - scoringSprites.at(i).getGlobalBounds().width - (scoringSprites.at(i).getGlobalBounds().width / 2)) {
+                scoringSprites.erase(scoringSprites.begin() + i);
+                hitScore.erase(hitScore.begin() + i);
             }
         }
     }
 
     void Pipe::randomisePipeOffset() {
-        pipeSpawnYOffset = (floatDistro(defEngine) * (float)(landHeight + 1.0));
+        pipeSpawnYOffset = (floatDistro(defEngine) * (float) (landHeight + 1.0));
     }
 
     const std::vector<sf::Sprite> &Pipe::getPipeSprites() const {
         return pipeSprites;
     }
 
-    void Pipe::setPipeSprites(const std::vector<sf::Sprite> &pipeSprites) {
-        Pipe::pipeSprites = pipeSprites;
+    const std::vector<sf::Sprite> &Pipe::getScoringPipesSprites() const {
+        return scoringSprites;
+    }
+
+    std::vector<bool> &Pipe::getIsBeenHitScore() {
+        return hitScore;
     }
 }

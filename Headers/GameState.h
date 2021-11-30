@@ -33,6 +33,8 @@ namespace Maltempo {
 
         void checkCollisionWithPipes();
 
+        void checkCollisionWithScoringPipes();
+
         sf::Clock clock;
         GameDataRef data;
         sf::Sprite background;
@@ -42,6 +44,8 @@ namespace Maltempo {
         Flash *flash;
 
         int gameState;
+
+        int score;
     };
 
 }

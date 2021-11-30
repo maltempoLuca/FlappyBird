@@ -17,20 +17,20 @@ namespace Maltempo {
     }
 
     void Land::moveLand(float dt) {
-        for (unsigned short int i = 0; i < landSprites.size(); i++) {
+        for (auto & landSprite : landSprites) {
             float movement = PIPE_MOVEMENT_SPEED * dt;
-            landSprites.at(i).move(-movement, 0.0f);
+            landSprite.move(-movement, 0.0f);
 
-            if (landSprites.at(i).getPosition().x < 0 - landSprites.at(i).getGlobalBounds().width) {
-                sf::Vector2f position(data->window.getSize().x, landSprites.at(i).getPosition().y);
-                landSprites.at(i).setPosition(position);
+            if (landSprite.getPosition().x < 0 - landSprite.getGlobalBounds().width) {
+                sf::Vector2f position(data->window.getSize().x, landSprite.getPosition().y);
+                landSprite.setPosition(position);
             }
         }
     }
 
     void Land::drawLand() {
-        for (unsigned short int i = 0; i < landSprites.size(); i++) {
-            data->window.draw(landSprites.at(i));
+        for (const auto & landSprite : landSprites) {
+            data->window.draw(landSprite);
         }
     }
 

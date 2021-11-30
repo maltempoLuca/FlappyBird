@@ -32,7 +32,6 @@ namespace Maltempo {
 
 
     void Flash::draw() {
-        std::cout << "sono in draw" << std::endl;
         data->window.draw(shape);
     }
 }

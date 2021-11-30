@@ -22,6 +22,7 @@ namespace Maltempo {
         data->assets.loadTexture("Game Background", GAME_BACKGROUND_FILEPATH);
         data->assets.loadTexture("Pipe Up", PIPE_UP_FILEPATH);
         data->assets.loadTexture("Pipe Down", PIPE_DOWN_FILEPATH);
+        data->assets.loadTexture("Scoring Pipe", SCORING_PIPE_FILEPATH);
         data->assets.loadTexture("Land", LAND_FILEPATH);
         data->assets.loadTexture("Bird Frame 1", BIRD_FRAME_1_FILEPATH);
         data->assets.loadTexture("Bird Frame 2", BIRD_FRAME_2_FILEPATH);
@@ -35,6 +36,7 @@ namespace Maltempo {
 
         background.setTexture(this->data->assets.getTexture("Game Background"));
 
+        score = 0;
         gameState = GameStates::eReady;
     }
 
@@ -65,15 +67,16 @@ namespace Maltempo {
                 pipe->randomisePipeOffset();
                 pipe->spawnBottomPipe();
                 pipe->spawnTopPipe();
+                pipe->spawnScoringPipe();
                 clock.restart();
             }
             bird->update(dt);
 
             checkCollisionWithLand();
             checkCollisionWithPipes();
+            checkCollisionWithScoringPipes();
         }
-        if(gameState == eGameOver){
-            std::cout<<"sono in gameOver"<<std::endl;
+        if (gameState == eGameOver) {
             flash->show(dt);
         }
     }
@@ -101,9 +104,24 @@ namespace Maltempo {
     void GameState::checkCollisionWithPipes() {
         std::vector<sf::Sprite> pipeSprites = pipe->getPipeSprites();
         for (auto &pipeSprite: pipeSprites) {
-            if (Collision::checkSpriteCollision(bird->getSprite(), 1.0f, pipeSprite,
+            if (Collision::checkSpriteCollision(bird->getSprite(), BIRD_COLLISION_SCALE, pipeSprite,
                                                 FULL_COLLISION_SCALE)) {
                 gameState = eGameOver;
+            }
+        }
+    }
+
+    void GameState::checkCollisionWithScoringPipes() {
+        std::vector<sf::Sprite> scoringSprites = pipe->getScoringPipesSprites();
+        std::vector<bool>& isBeenHitScore = pipe->getIsBeenHitScore();
+        for (int i = 0; i < scoringSprites.size(); i++) {
+            if (Collision::checkSpriteCollision(bird->getSprite(), BIRD_COLLISION_SCALE, scoringSprites.at(i),
+                                                FULL_COLLISION_SCALE)) {
+                if (!isBeenHitScore.at(i)) {
+                    score++;
+                    isBeenHitScore.at(i) = true;
+                    std::cout << "Score: " << score << std::endl;
+                }
             }
         }
     }

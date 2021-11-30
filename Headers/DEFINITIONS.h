@@ -15,7 +15,8 @@
 #define PLAY_BUTTON_FILEPATH "../Resources/res/PlayButton.png"
 #define PIPE_UP_FILEPATH "../Resources/res/PipeUP.png"
 #define PIPE_DOWN_FILEPATH "../Resources/res/PipeDown.png"
-#define  LAND_FILEPATH "../Resources/res/Land.png"
+#define SCORING_PIPE_FILEPATH "../Resources/res/InvisibleScoringPipe.png"
+#define LAND_FILEPATH "../Resources/res/Land.png"
 #define PIPE_MOVEMENT_SPEED 200.0f
 #define PIPE_SPAWN_FREQUENCY 1.5f
 #define BIRD_ANIMATION_DURATION 0.6f
