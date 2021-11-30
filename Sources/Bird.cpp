@@ -8,14 +8,14 @@ namespace Maltempo {
 
     Bird::Bird(const GameDataRef &data) : data(data) {
         animationIterator = 0;
-        animationFrames.push_back(data->assets.getTexture("Bird Frame 1"));
-        animationFrames.push_back(data->assets.getTexture("Bird Frame 2"));
-        animationFrames.push_back(data->assets.getTexture("Bird Frame 3"));
-        animationFrames.push_back(data->assets.getTexture("Bird Frame 4"));
+        animationFrames.push_back(data->assetManager.getTexture("Bird Frame 1"));
+        animationFrames.push_back(data->assetManager.getTexture("Bird Frame 2"));
+        animationFrames.push_back(data->assetManager.getTexture("Bird Frame 3"));
+        animationFrames.push_back(data->assetManager.getTexture("Bird Frame 4"));
 
         birdSprite.setTexture(animationFrames.at(animationIterator));
-        birdSprite.setPosition((data->window.getSize().x / 4) - (birdSprite.getGlobalBounds().width / 2),
-                               (data->window.getSize().y / 2) - (birdSprite.getGlobalBounds().height / 2));
+        birdSprite.setPosition((data->renderWindow.getSize().x / 4) - (birdSprite.getGlobalBounds().width / 2),
+                               (data->renderWindow.getSize().y / 2) - (birdSprite.getGlobalBounds().height / 2));
         birdState = BIRD_STATE_STILL;
 
         sf::Vector2f origin = sf::Vector2f(birdSprite.getGlobalBounds().width / 2,
@@ -26,7 +26,7 @@ namespace Maltempo {
     }
 
     void Bird::draw() {
-        data->window.draw(birdSprite);
+        data->renderWindow.draw(birdSprite);
     }
 
     void Bird::animate(float dt) {

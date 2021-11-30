@@ -7,7 +7,7 @@
 namespace Maltempo {
 
     Flash::Flash(GameDataRef data) : data(data) {
-        shape = sf::RectangleShape(sf::Vector2f(data->window.getSize()));
+        shape = sf::RectangleShape(sf::Vector2f(data->renderWindow.getSize()));
         shape.setFillColor(sf::Color(255, 255, 255, 0)); // alpha = 0 == not visible at the start
         flashOn = true;
     }
@@ -32,6 +32,6 @@ namespace Maltempo {
 
 
     void Flash::draw() {
-        data->window.draw(shape);
+        data->renderWindow.draw(shape);
     }
 }

@@ -15,26 +15,27 @@ namespace Maltempo {
     }
 
     void MainMenuState::init() {
-        data->assets.loadTexture("Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH);
-        data->assets.loadTexture("Game Title", GAME_TITLE_FILEPATH);
-        data->assets.loadTexture("PlayButton", PLAY_BUTTON_FILEPATH);
-        background.setTexture(this->data->assets.getTexture("Main Menu Background"));
-        title.setTexture(this->data->assets.getTexture("Game Title"));
-        playButton.setTexture(this->data->assets.getTexture("PlayButton"));
+        data->assetManager.loadTexture("Main Menu Background", MAIN_MENU_BACKGROUND_FILEPATH);
+        data->assetManager.loadTexture("Game Title", GAME_TITLE_FILEPATH);
+        data->assetManager.loadTexture("PlayButton", PLAY_BUTTON_FILEPATH);
+        background.setTexture(this->data->assetManager.getTexture("Main Menu Background"));
+        title.setTexture(this->data->assetManager.getTexture("Game Title"));
+        playButton.setTexture(this->data->assetManager.getTexture("PlayButton"));
         title.setPosition((SCREEN_WIDTH / 2) - (title.getGlobalBounds().width / 2), title.getGlobalBounds().height / 2);
         playButton.setPosition((SCREEN_WIDTH / 2) - (playButton.getGlobalBounds().width / 2),
                                (SCREEN_HEIGHT / 2) - (playButton.getGlobalBounds().height / 2));
+        data->renderWindow.setFramerateLimit(60);
     }
 
     void MainMenuState::handleInput() {
         sf::Event event;
-        while (data->window.pollEvent(event)) {
+        while (data->renderWindow.pollEvent(event)) {
             if (sf::Event::Closed == event.type) {
-                data->window.close();
+                data->renderWindow.close();
             }
 
-            if(data->input.isSpriteClicked(playButton,sf::Mouse::Left, data->window)){
-                data->machine.addState(StateRef(new GameState(data)), true);
+            if(data->inputManager.isSpriteClicked(playButton, sf::Mouse::Left, data->renderWindow)){
+                data->stateMachine.addState(StateRef(new GameState(data)), true);
             }
         }
     }
@@ -43,11 +44,11 @@ namespace Maltempo {
     }
 
     void MainMenuState::draw(float dt) {
-        data->window.clear();
-        data->window.draw(background);
-        data->window.draw(title);
-        data->window.draw(playButton);
-        data->window.display();
+        data->renderWindow.clear();
+        data->renderWindow.draw(background);
+        data->renderWindow.draw(title);
+        data->renderWindow.draw(playButton);
+        data->renderWindow.display();
     }
 }
 

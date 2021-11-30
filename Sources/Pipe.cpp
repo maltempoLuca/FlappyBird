@@ -9,32 +9,32 @@
 //TODO:: gestisci attraverso una struct i pipes + boolean.
 namespace Maltempo {
 
-    Pipe::Pipe(const GameDataRef& data) : data(data), landHeight(data->assets.getTexture("Land").getSize().y),
-                                   pipeSpawnYOffset(0) {
+    Pipe::Pipe(const GameDataRef &data) : data(data), landHeight(data->assetManager.getTexture("Land").getSize().y),
+                                          pipeSpawnYOffset(0) {
     }
 
     void Pipe::drawPipes() {
         for (const auto &pipeSprite: pipeSprites) {
-            data->window.draw(pipeSprite);
+            data->renderWindow.draw(pipeSprite);
         }
     }
 
     void Pipe::spawnBottomPipe() {
-        sf::Sprite sprite(data->assets.getTexture("Pipe Up"));
-        sprite.setPosition(data->window.getSize().x,
-                           data->window.getSize().y - sprite.getGlobalBounds().height - pipeSpawnYOffset );
+        sf::Sprite sprite(data->assetManager.getTexture("Pipe Up"));
+        sprite.setPosition(data->renderWindow.getSize().x,
+                           data->renderWindow.getSize().y - sprite.getGlobalBounds().height - pipeSpawnYOffset);
         pipeSprites.push_back(sprite);
     }
 
     void Pipe::spawnTopPipe() {
-        sf::Sprite sprite(data->assets.getTexture("Pipe Down"));
-        sprite.setPosition(data->window.getSize().x, -pipeSpawnYOffset);
+        sf::Sprite sprite(data->assetManager.getTexture("Pipe Down"));
+        sprite.setPosition(data->renderWindow.getSize().x, -pipeSpawnYOffset);
         pipeSprites.push_back(sprite);
     }
 
     void Pipe::spawnScoringPipe() {
-        sf::Sprite sprite(data->assets.getTexture("Scoring Pipe"));
-        sprite.setPosition(data->window.getSize().x + (sprite.getGlobalBounds().width / 2), 0);
+        sf::Sprite sprite(data->assetManager.getTexture("Scoring Pipe"));
+        sprite.setPosition(data->renderWindow.getSize().x + (sprite.getGlobalBounds().width / 2), 0);
         sprite.setColor(sf::Color(0, 0, 0, 0));
 
         scoringSprites.push_back(sprite);
@@ -45,6 +45,9 @@ namespace Maltempo {
         for (int i = 0; i < pipeSprites.size(); i++) {
             float movement = PIPE_MOVEMENT_SPEED * dt;
             pipeSprites.at(i).move(-movement, 0);
+        }
+
+        for (int i = 0; i < pipeSprites.size(); i++) {
             if (pipeSprites.at(i).getPosition().x < 0 - pipeSprites.at(i).getGlobalBounds().width) {
                 pipeSprites.erase(pipeSprites.begin() + i);
             }

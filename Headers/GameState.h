@@ -12,12 +12,13 @@
 #include "../Headers/Bird.h"
 #include "../Headers/Collision.h"
 #include "../Headers/Flash.h"
+#include "../Headers/HUD.h"
 
 
 namespace Maltempo {
     class GameState : public State {
     public:
-        explicit GameState(GameDataRef data);
+        GameState(GameDataRef data);
 
         void init() override;
 
@@ -42,6 +43,7 @@ namespace Maltempo {
         Land *land;
         Bird *bird;
         Flash *flash;
+        HUD *hud;
 
         int gameState;
 

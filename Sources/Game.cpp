@@ -7,8 +7,8 @@
 
 namespace Maltempo {
     Game::Game(int width, int height, std::string title) {
-        data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
-        data->machine.addState(StateRef(new SplashState(this->data)));
+        data->renderWindow.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
+        data->stateMachine.addState(StateRef(new SplashState(this->data)));
 
         this->run();
     }
@@ -18,8 +18,8 @@ namespace Maltempo {
         float currentTime = this->clock.getElapsedTime().asSeconds();
         float accumulator = 0.0f;
 
-        while (this->data->window.isOpen()) {
-            this->data->machine.processStateChanges();
+        while (this->data->renderWindow.isOpen()) {
+            this->data->stateMachine.processStateChanges();
 
             newTime = this->clock.getElapsedTime().asSeconds();
             frameTime = newTime - currentTime;
@@ -31,13 +31,13 @@ namespace Maltempo {
             currentTime = newTime;
             accumulator += frameTime;
             while (accumulator >= dt) {
-                this->data->machine.getActiveState()->handleInput();
-                this->data->machine.getActiveState()->update(dt);
+                this->data->stateMachine.getActiveState()->handleInput();
+                this->data->stateMachine.getActiveState()->update(dt);
 
                 accumulator -= dt;
             }
             interpolation = accumulator / dt;
-            this->data->machine.getActiveState()->draw(interpolation);
+            this->data->stateMachine.getActiveState()->draw(interpolation);
         }
     }
 }

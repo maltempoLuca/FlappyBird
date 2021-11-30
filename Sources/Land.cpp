@@ -8,10 +8,10 @@
 namespace Maltempo {
 
     Land::Land(const GameDataRef& data) : data(data) {
-        sf::Sprite sprite(data->assets.getTexture("Land"));
-        sf::Sprite sprite2(data->assets.getTexture("Land"));
-        sprite.setPosition(sprite.getGlobalBounds().width, data->window.getSize().y - sprite.getGlobalBounds().height);
-        sprite2.setPosition(0, data->window.getSize().y - sprite.getGlobalBounds().height);
+        sf::Sprite sprite(data->assetManager.getTexture("Land"));
+        sf::Sprite sprite2(data->assetManager.getTexture("Land"));
+        sprite.setPosition(sprite.getGlobalBounds().width, data->renderWindow.getSize().y - sprite.getGlobalBounds().height);
+        sprite2.setPosition(0, data->renderWindow.getSize().y - sprite.getGlobalBounds().height);
         landSprites.push_back(sprite);
         landSprites.push_back(sprite2);
     }
@@ -22,7 +22,7 @@ namespace Maltempo {
             landSprite.move(-movement, 0.0f);
 
             if (landSprite.getPosition().x < 0 - landSprite.getGlobalBounds().width) {
-                sf::Vector2f position(data->window.getSize().x, landSprite.getPosition().y);
+                sf::Vector2f position(data->renderWindow.getSize().x, landSprite.getPosition().y);
                 landSprite.setPosition(position);
             }
         }
@@ -30,7 +30,7 @@ namespace Maltempo {
 
     void Land::drawLand() {
         for (const auto & landSprite : landSprites) {
-            data->window.draw(landSprite);
+            data->renderWindow.draw(landSprite);
         }
     }
 

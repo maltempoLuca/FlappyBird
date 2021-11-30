@@ -13,10 +13,10 @@
 
 namespace Maltempo {
     struct GameData {
-        StateMachine machine;
-        sf::RenderWindow window;
-        AssetManager assets;
-        InputManager input;
+        StateMachine stateMachine;
+        sf::RenderWindow renderWindow;
+        AssetManager assetManager;
+        InputManager inputManager;
     };
 
     typedef std::shared_ptr<GameData> GameDataRef;

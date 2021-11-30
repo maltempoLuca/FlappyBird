@@ -16,28 +16,28 @@ namespace Maltempo {
     }
 
     void SplashState::init() {
-        data->assets.loadTexture("Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH);
-        background.setTexture(this->data->assets.getTexture("Splash State Background"));
+        data->assetManager.loadTexture("Splash State Background", SPLASH_SCENE_BACKGROUND_FILEPATH);
+        background.setTexture(this->data->assetManager.getTexture("Splash State Background"));
     }
 
     void SplashState::handleInput() {
         sf::Event event;
-        while (data->window.pollEvent(event)) {
+        while (data->renderWindow.pollEvent(event)) {
             if (sf::Event::Closed == event.type) {
-                data->window.close();
+                data->renderWindow.close();
             }
         }
     }
 
     void SplashState::update(float dt) {
         if (clock.getElapsedTime().asSeconds() > SPLASH_STATE_SHOW_TIME) {
-            data->machine.addState(StateRef(new MainMenuState(data)), true);
+            data->stateMachine.addState(StateRef(new MainMenuState(data)), true);
         }
     }
 
     void SplashState::draw(float dt) {
-        data->window.clear();
-        data->window.draw(background);
-        data->window.display();
+        data->renderWindow.clear();
+        data->renderWindow.draw(background);
+        data->renderWindow.display();
     }
 }
