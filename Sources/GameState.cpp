@@ -9,6 +9,7 @@
 #include "../Headers/GameOverState.h"
 #include "../Headers/DEFINITIONS.h"
 #include <iostream>
+//TODO:: occupati di eliminare tutti i new con dei delete. Poi ricordati di fare il distruttore di ogni classe che liberi i vector<>!
 
 namespace Maltempo {
 
@@ -30,6 +31,7 @@ namespace Maltempo {
         pipe = new Pipe(data);
         land = new Land(data);
         bird = new Bird(data);
+        flash = new Flash(data);
 
         background.setTexture(this->data->assets.getTexture("Game Background"));
 
@@ -66,21 +68,13 @@ namespace Maltempo {
                 clock.restart();
             }
             bird->update(dt);
-            std::vector<sf::Sprite> landSprites = land->getLandSprites();
-            for (auto &landSprite: landSprites) {
-                if (Collision::checkSpriteCollision(bird->getSprite(), BIRD_COLLISION_SCALE, landSprite,
-                                                    FULL_COLLISION_SCALE)) {
-                    gameState = eGameOver;
-                }
-            }
 
-            std::vector<sf::Sprite> pipeSprites = pipe->getPipeSprites();
-            for (auto &pipeSprite: pipeSprites) {
-                if (Collision::checkSpriteCollision(bird->getSprite(), 1.0f, pipeSprite,
-                                                    FULL_COLLISION_SCALE)) {
-                    gameState = eGameOver;
-                }
-            }
+            checkCollisionWithLand();
+            checkCollisionWithPipes();
+        }
+        if(gameState == eGameOver){
+            std::cout<<"sono in gameOver"<<std::endl;
+            flash->show(dt);
         }
     }
 
@@ -90,6 +84,27 @@ namespace Maltempo {
         pipe->drawPipes();
         land->drawLand();
         bird->draw();
+        flash->draw();
         data->window.display();
+    }
+
+    void GameState::checkCollisionWithLand() {
+        std::vector<sf::Sprite> landSprites = land->getLandSprites();
+        for (auto &landSprite: landSprites) {
+            if (Collision::checkSpriteCollision(bird->getSprite(), BIRD_COLLISION_SCALE, landSprite,
+                                                FULL_COLLISION_SCALE)) {
+                gameState = eGameOver;
+            }
+        }
+    }
+
+    void GameState::checkCollisionWithPipes() {
+        std::vector<sf::Sprite> pipeSprites = pipe->getPipeSprites();
+        for (auto &pipeSprite: pipeSprites) {
+            if (Collision::checkSpriteCollision(bird->getSprite(), 1.0f, pipeSprite,
+                                                FULL_COLLISION_SCALE)) {
+                gameState = eGameOver;
+            }
+        }
     }
 }

@@ -11,6 +11,7 @@
 #include "../Headers/Land.h"
 #include "../Headers/Bird.h"
 #include "../Headers/Collision.h"
+#include "../Headers/Flash.h"
 
 
 namespace Maltempo {
@@ -26,13 +27,19 @@ namespace Maltempo {
 
         void draw(float dt) override;
 
+
     private:
+        void checkCollisionWithLand();
+
+        void checkCollisionWithPipes();
+
         sf::Clock clock;
         GameDataRef data;
         sf::Sprite background;
         Pipe *pipe;
         Land *land;
         Bird *bird;
+        Flash *flash;
 
         int gameState;
     };

@@ -32,6 +32,7 @@
 #define ROTATION_SPEED 130.0f
 #define BIRD_COLLISION_SCALE 0.625f
 #define FULL_COLLISION_SCALE 1.0f
+#define FLASH_SPEED 1500.0f
 
 
 enum GameStates
